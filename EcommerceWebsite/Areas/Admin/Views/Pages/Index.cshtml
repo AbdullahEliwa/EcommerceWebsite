@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EcommerceWebsite.Models.Admin.Page>
+
+@{
+    ViewBag.Title = "All Pages";
+}
+
+@Html.ActionLink("Create new Page", "Create", "Pages", new { area = "admin"}, new { @class="btn btn-primary"})
+
+<h2>All Pages</h2>
+@if(!Model.Any())
+{
+    <h3>You don't have any page yet, go add some!</h3>
+}
+else
+{
+    <table class="table table-hover table-responsive">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Slug</th>
+                <th>Has Sidebar</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var page in Model)
+            {
+                <tr>
+                    <td>@page.Title</td>
+                    <td>@page.Slug</td>
+                    <td>@Html.DisplayFor(p => page.HasSideBar)</td>
+                    <td>
+                    @Html.ActionLink("Edit", "Edit", "Pages", new { area ="admin", id = page.Id},new { @class= "btn btn-default" }) 
+                    @Html.ActionLink("Delete", "Delete", "Pages", new { area ="admin", id = page.Id},new { @class= "btn btn-default" }) 
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

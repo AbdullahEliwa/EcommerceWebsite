@@ -1,6 +1,7 @@
 ﻿using System.Data.Entity;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using EcommerceWebsite.Models.Admin;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -20,6 +21,15 @@ namespace EcommerceWebsite.Models
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        // Admin Tables
+        public DbSet<Page> Pages { get; set; }
+
+
+        // Normal User Tables
+
+
+
+
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {

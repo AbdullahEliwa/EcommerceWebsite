@@ -175,6 +175,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Admin\Controllers\PagesController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -185,8 +186,13 @@
     <Compile Include="Migrations\201903181907002_InitialDB.Designer.cs">
       <DependentUpon>201903181907002_InitialDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903182029332_AddPages.cs" />
+    <Compile Include="Migrations\201903182029332_AddPages.Designer.cs">
+      <DependentUpon>201903182029332_AddPages.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Admin\Page.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,6 +207,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\Admin\Pages.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Areas\Admin\Views\web.config" />
@@ -209,6 +216,8 @@
     <Content Include="Areas\Admin\Views\Shared\_Layout.cshtml" />
     <Content Include="Areas\Admin\Views\Shared\_NavBar.cshtml" />
     <Content Include="Areas\Admin\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Pages\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Pages\PageForm.cshtml" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
@@ -277,6 +286,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903181907002_InitialDB.resx">
       <DependentUpon>201903181907002_InitialDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903182029332_AddPages.resx">
+      <DependentUpon>201903182029332_AddPages.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
