@@ -22,6 +22,7 @@ namespace EcommerceWebsite.Models.Admin
 
         public byte Sorting { get; set; }
 
+        [Display(Name ="Has sidebar?")]
         public bool HasSideBar { get; set; }
     }
 }

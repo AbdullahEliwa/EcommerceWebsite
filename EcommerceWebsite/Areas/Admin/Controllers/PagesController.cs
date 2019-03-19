@@ -30,6 +30,14 @@ namespace EcommerceWebsite.Areas.Admin.Controllers
 
             return View(pages);
         }
+
+        public ActionResult Details(int id)
+        {
+            var page = _context.Pages.SingleOrDefault(p => p.Id == id);
+            if (page is null)
+                return HttpNotFound();
+            return View(page);
+        }
         #endregion
 
         #region C => Create Operation
@@ -42,13 +50,20 @@ namespace EcommerceWebsite.Areas.Admin.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create(Page page)
         {
-            if (page is null)
-                return View("PageForm");
             if (!ModelState.IsValid)
                 return View("PageForm", page);
 
+            if ( _context.Pages.Any(p => p.Title == page.Title || p.Slug == page.Slug))
+            {
+                ModelState.AddModelError("", "The title or slug are already exists.");
+                return View("PageForm", page);
+            }
+
+            page.Sorting = 100;
             _context.Pages.Add(page);
             _context.SaveChanges();
+
+            TempData["SuccessAddedMessage"] = page.Title + " had been added successfully.";
             return RedirectToAction("Index");
         }
         #endregion
@@ -68,20 +83,28 @@ namespace EcommerceWebsite.Areas.Admin.Controllers
         public ActionResult Edit(int id, Page page)
         {
             if (!ModelState.IsValid)
-                return View("PageForm");
+                return View("PageForm", page);
+            if (_context.Pages.Where(x => x.Id != id).Any(p => p.Title == page.Title || p.Slug == page.Slug))
+            {
+                ModelState.AddModelError("", "The title or slug are already exists Or No thing has been changed.");
+                return View("PageForm", page);
+            }
+            
             var PageInDb = _context.Pages.SingleOrDefault(p => p.Id == id);
-            if (PageInDb is null)
-                return HttpNotFound();
             PageInDb.Title = page.Title;
             PageInDb.Body = page.Body;
             PageInDb.Slug = page.Slug;
             PageInDb.Sorting = page.Sorting;
             PageInDb.HasSideBar = page.HasSideBar;
             _context.SaveChanges();
+
+            TempData["SuccessEditMessage"] = "Edit done successfully";
+
             return RedirectToAction("Index");
         }
         #endregion
 
+        #region D => Delete Operation
         public ActionResult Delete(int id)
         {
             var pageInDb = _context.Pages.SingleOrDefault(p => p.Id == id);
@@ -91,5 +114,6 @@ namespace EcommerceWebsite.Areas.Admin.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
+        #endregion
     }
 }

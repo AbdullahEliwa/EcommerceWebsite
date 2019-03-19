@@ -4,10 +4,20 @@
     ViewBag.Title = "All Pages";
 }
 
-@Html.ActionLink("Create new Page", "Create", "Pages", new { area = "admin"}, new { @class="btn btn-primary"})
+@if (TempData["SuccessAddedMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessAddedMessage"]</div>
+}
+@if (TempData["SuccessEditMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessEditMessage"]</div>
+}
+
 
 <h2>All Pages</h2>
-@if(!Model.Any())
+@Html.ActionLink("Create new Page", "Create", "Pages", new { area = "admin" }, new { @class = "btn btn-primary" })
+
+@if (!Model.Any())
 {
     <h3>You don't have any page yet, go add some!</h3>
 }
@@ -26,12 +36,15 @@ else
             @foreach (var page in Model)
             {
                 <tr>
-                    <td>@page.Title</td>
+                    <td>@Html.ActionLink(page.Title, "Details", new { id = page.Id })</td>
                     <td>@page.Slug</td>
                     <td>@Html.DisplayFor(p => page.HasSideBar)</td>
                     <td>
-                    @Html.ActionLink("Edit", "Edit", "Pages", new { area ="admin", id = page.Id},new { @class= "btn btn-default" }) 
-                    @Html.ActionLink("Delete", "Delete", "Pages", new { area ="admin", id = page.Id},new { @class= "btn btn-default" }) 
+                        @Html.ActionLink("Edit", "Edit", "Pages", new { area = "admin", id = page.Id }, new { @class = "btn btn-default" })
+                        @if (page.Title != "Home")
+                        {
+                            @Html.ActionLink("Delete", "Delete", "Pages", new { area = "admin", id = page.Id }, new { @class = "btn btn-default" })
+                        }
                     </td>
                 </tr>
             }
