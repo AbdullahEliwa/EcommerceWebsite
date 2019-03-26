@@ -115,5 +115,21 @@ namespace EcommerceWebsite.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
         #endregion
+
+
+        #region Reorder Pages Action
+        [HttpPost]
+        public void ReorderPages(int[] id)
+        {
+            byte count = 1;
+            foreach(var pageId in id)
+            {
+                var pageInDb = _context.Pages.Find(pageId);
+                pageInDb.Sorting = count;
+                _context.SaveChanges();
+                count++;
+            }
+        }
+        #endregion
     }
 }

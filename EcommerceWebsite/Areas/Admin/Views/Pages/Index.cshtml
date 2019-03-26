@@ -23,9 +23,9 @@
 }
 else
 {
-    <table class="table table-hover table-responsive">
+    <table class="table table-hover table-responsive sorting" id="pages">
         <thead>
-            <tr>
+            <tr class="home">
                 <th>Title</th>
                 <th>Slug</th>
                 <th>Has Sidebar</th>
@@ -35,7 +35,7 @@ else
         <tbody>
             @foreach (var page in Model)
             {
-                <tr>
+                <tr id="id_@page.Id" class="@page.Slug">
                     <td>@Html.ActionLink(page.Title, "Details", new { id = page.Id })</td>
                     <td>@page.Slug</td>
                     <td>@Html.DisplayFor(p => page.HasSideBar)</td>
@@ -50,4 +50,26 @@ else
             }
         </tbody>
     </table>
+}
+@section scripts
+{
+    <script src="~/Scripts/jquery-ui-1.12.1.min.js"></script>
+    
+    <script>
+        /* Don't Forget to Add Delete Confirm Here, Using BootBox.*/
+        /*========================================================*/
+        $(function () {
+            $("table#pages tbody").sortable({
+                items: "tr:not(.home)",
+                placeholder: "ui-state-highlight",
+                update: function () {
+                    var ids = $("table#pages tbody").sortable("serialize");
+                    var url = "/Admin/Pages/ReorderPages";
+                    console.log(ids);
+                    $.post(url, ids, function () {
+                    });
+                }
+            });
+        });
+    </script>
 }
